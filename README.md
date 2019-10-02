@@ -7,6 +7,8 @@
 * AWS CLI (https://docs.aws.amazon.com/en_pv/cli/latest/userguide/cli-chap-install.html)
 * SAM (https://docs.aws.amazon.com/en_pv/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
 * img2lambda (https://github.com/awslabs/aws-lambda-container-image-converter)
+* Route53 has a hosted zone for domain you want to issue/renew certificate for
+* Free account on Sentry to store exceptions (https://sentry.io)
 
 Copy configuration files and fill them with your own data. Copied fiels are in `.gitignore`.
 
