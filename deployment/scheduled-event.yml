@@ -1,0 +1,31 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Trigger that will execute our lambda function periodically
+Parameters:
+  EventInput:
+    Type: String
+    Description: JSON string representing event payload to send to lambda
+  EventState:
+    Type: String
+    Description: Choose whether event is enabled or disabled
+    Default: ENABLED
+    AllowedValues:
+      - ENABLED
+      - DISABLED
+Resources:
+  ScheduledRule:
+    Type: AWS::Events::Rule
+    Properties:
+      ScheduleExpression: cron(0 3 * * ? *)
+      State: !Ref EventState
+      Targets:
+        -
+          Arn: !ImportValue letsencrypt-function
+          Id: 'LetsEncryptFunction'
+          Input: !Sub '${EventInput}'
+  PermissionForEventsToInvokeLambda: 
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: letsencrypt-func
+      Action: "lambda:InvokeFunction"
+      Principal: "events.amazonaws.com"
+      SourceArn: !GetAtt ScheduledRule.Arn

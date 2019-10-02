@@ -1,0 +1,74 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Lambda function for issuing and renewing "Lets Encrypt" certificates
+Transform: AWS::Serverless-2016-10-31
+Parameters:
+  Environment:
+    Type: String
+    Description: name of the environment in which you function will run (like prod, stage)
+  SentryDsn:
+    Type: String
+    Description: Sentry DNS for error reporting
+Resources:
+  LetsEncryptFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: letsencrypt-func
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.6
+      CodeUri: ../../src
+      Timeout: 300
+      MemorySize: 128
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          ENVIRONMENT: !Ref Environment
+          SENTRY_DSN: !Ref SentryDsn
+      Layers: LAYERS_PLACEHOLDER
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument: 
+        Version: "2012-10-17"
+        Statement: 
+          - 
+            Effect: "Allow"
+            Principal: 
+              Service: 
+                - "lambda.amazonaws.com"
+              AWS:
+                - !Sub "arn:aws:iam::${AWS::AccountId}:root"
+            Action:
+              - "sts:AssumeRole"
+      Policies:
+        -
+          PolicyName: "allow-acm-management"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              -
+                Effect: "Allow"
+                Action:
+                  - "acm:DescribeCertificate"
+                  - "acm:ImportCertificate"
+                  - "acm:ListCertificates"
+                  - "cloudwatch:PutMetricData"
+                  - "logs:CreateLogGroup"
+                  - "logs:CreateLogStream"
+                  - "logs:PutLogEvents"
+                  - "route53:ListHostedZones"
+                Resource:
+                  - "*"
+              -
+                Effect: "Allow"
+                Action:
+                  - "route53:ChangeResourceRecordSets"
+                  - "route53:GetChange"
+                Resource:
+                  - "arn:aws:route53:::change/*"
+                  - "arn:aws:route53:::hostedzone/*"
+Outputs:
+  LetsEncryptFunctionArn:
+    Description: A reference to the created ecs cluster
+    Value: !GetAtt LetsEncryptFunction.Arn
+    Export:
+      Name: letsencrypt-function
