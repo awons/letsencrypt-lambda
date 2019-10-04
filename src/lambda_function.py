@@ -23,6 +23,6 @@ def lambda_handler(event, context):
     result = manager.renew_or_create_cert(domains, email)
 
     if result is True:
-        return f'Issued or renewd certificate for: {",".join(domains)}'
+        print(f'Issued or renewd certificate for: {",".join(domains)}')
     else:
-        return f'Nothing to do for: {",".join(domains)}'
+        print(f'Nothing to do for: {",".join(domains)}')
