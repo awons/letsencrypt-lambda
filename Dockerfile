@@ -34,8 +34,3 @@ RUN cd && /usr/local/bin/virtualenv venv\
 FROM lambci/lambda:python3.6 as runtime
 
 COPY --from=development /opt /opt
-
-
-FROM runtime as function
-
-COPY src /var/task
