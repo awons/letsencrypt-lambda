@@ -43,7 +43,7 @@ class CertManager:
             'certonly',
             '-n',
             '--agree-tos',
-            # '--dry-run',
+            # '--test-cert',
             '--email', email,
             '--dns-route53',
             '-d', ",".join(domains),
