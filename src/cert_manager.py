@@ -68,13 +68,13 @@ class CertManager:
             certificate_arn = current_cert['Certificate']['CertificateArn']
 
         if certificate_arn is None:
-            acm_response = self._acm_client.import_certificate(
+            self._acm_client.import_certificate(
                 Certificate=certificate,
                 PrivateKey=private_key,
                 CertificateChain=certificate_chain
             )
         else:
-            acm_response = self._acm_client.import_certificate(
+            self._acm_client.import_certificate(
                 CertificateArn=certificate_arn,
                 Certificate=certificate,
                 PrivateKey=private_key,
