@@ -11,4 +11,5 @@ Resources:
       BucketName: !Ref BucketName
       AccessControl: Private
       PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
         BlockPublicPolicy: true
