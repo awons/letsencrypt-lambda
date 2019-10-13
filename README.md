@@ -50,7 +50,7 @@ make package AWS_REGION=eu-west-1 LAMBDA_S3_BUCKET=your-backet-name
 Choose region this function should be deploy to and pick you CF stack name for it.
 
 ```bash
-make deploy STACK_NAME=my-lambda-stack-name AWS_REGION=eu-west-1
+make deploy STACK_NAME=your-lambda-stack-name AWS_REGION=eu-west-1
 ```
 
 ### 5. Schedule issuing/renewal of your domain's certificate
@@ -58,7 +58,7 @@ make deploy STACK_NAME=my-lambda-stack-name AWS_REGION=eu-west-1
 This CF template will create a stack that will trigger lambda function and renew certificate. `domains` is a comma-separated list of domains for which one certificate should be issued/renewed.
 
 ```bash
-make create-scheduled-event STACK_NAME=my-event-stack-name EVENT_INPUT='{\"domains\": \"example.com\", \"region\": \"us-east-1\", \"email\": \"your-email@example.com\"}'
+make create-scheduled-event STACK_NAME=your-event-stack-name EVENT_INPUT='{\"domains\": \"example.com\", \"region\": \"us-east-1\", \"email\": \"your-email@example.com\"}'
 ```
 
 ## Run locally
