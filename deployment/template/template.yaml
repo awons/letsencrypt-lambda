@@ -68,7 +68,7 @@ Resources:
                   - "arn:aws:route53:::hostedzone/*"
 Outputs:
   LetsEncryptFunctionArn:
-    Description: A reference to the created ecs cluster
+    Description: An ARN of our function
     Value: !GetAtt LetsEncryptFunction.Arn
     Export:
       Name: letsencrypt-function
