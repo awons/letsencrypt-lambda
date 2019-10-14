@@ -1,5 +1,7 @@
 # Set of AWS CloudFormation templates for automation of LetsEncrypt certificates renewal
 
+You can find more about hot it all works on my blog https://blog.awons.eu/renewing-letsencrypt-certificate-on-aws/
+
 ## Requirements
 
 * Docker
